@@ -33,19 +33,6 @@
     self.cameraSwitch.on = NO;
     [self updateCameraSelection];
     
-    
-    //Output
-    AVCaptureVideoDataOutput *output = [[AVCaptureVideoDataOutput alloc] init];
-    [self.session addOutput:output];
-    output.videoSettings =
-    @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
-    
-    //Preview Layer
-    AVCaptureVideoPreviewLayer *previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
-    previewLayer.frame = self.overlay.bounds;
-    previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    [[self.placeHolder layer] addSublayer:previewLayer];
-    
     // Set up camera preview.
     [self setupCameraPreview];
 }
