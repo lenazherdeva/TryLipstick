@@ -42,8 +42,7 @@
     
     //Preview Layer
     AVCaptureVideoPreviewLayer *previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
-    UIView *myView = self.view;
-    previewLayer.frame = myView.bounds;
+    previewLayer.frame = self.overlay.bounds;
     previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [[self.placeHolder layer] addSublayer:previewLayer];
     
@@ -102,6 +101,16 @@
     return nil;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    NSLog(@"@");
+    
+    self.previewLayer.frame = self.placeHolder.layer.bounds;
+    self.previewLayer.position = CGPointMake(CGRectGetMidX(self.previewLayer.frame),
+                                             CGRectGetMidY(self.previewLayer.frame));
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -111,7 +120,7 @@
 - (void)setupCameraPreview {
     self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
     [self.previewLayer setBackgroundColor:[[UIColor blueColor] CGColor]];
-    [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
+    [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     CALayer *rootLayer = [self.placeHolder layer];
     [rootLayer setMasksToBounds:YES];
     [self.previewLayer setFrame:[rootLayer bounds]];
